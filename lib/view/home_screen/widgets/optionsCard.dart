@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quizapp/utils/constants/colorConstants.dart';
 
+
 class optionsCard extends StatelessWidget {
   const optionsCard({
     super.key,
@@ -10,7 +11,7 @@ class optionsCard extends StatelessWidget {
     this.borderColor,
   });
 
-  final String option; // Each options for corresponding questions
+  final String option;
   final Color? borderColor;
   final void Function()? onOpitonsTapped;
 
@@ -22,23 +23,28 @@ class optionsCard extends StatelessWidget {
         margin: EdgeInsets.only(bottom: 20),
         width: double.infinity,
         padding: EdgeInsets.all(15),
-        decoration: BoxDecoration(color: colorConstants.greyShade1,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.grey.shade800,
-              width: 2
-            ),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: borderColor ?? Colors.grey.shade800,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Row(
           children: [
-            Text(option,
-              style: TextStyle(
-                  color: colorConstants.mainWhite,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200
+            Expanded(
+              child: Text(
+                option,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500),
               ),
             ),
-            Spacer(),
-            Icon(Icons.radio_button_off, color: colorConstants.mainWhite,),
+            Icon(
+              Icons.radio_button_off,
+              color: Colors.white,
+            )
           ],
         ),
       ),

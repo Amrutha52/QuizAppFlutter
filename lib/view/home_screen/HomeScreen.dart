@@ -4,8 +4,7 @@ import 'package:quizapp/dummy_db.dart';
 import 'package:quizapp/utils/constants/colorConstants.dart';
 import 'package:quizapp/view/home_screen/widgets/optionsCard.dart';
 
-class HomeScreen extends StatefulWidget
-{
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
@@ -13,13 +12,27 @@ class HomeScreen extends StatefulWidget
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentQuestionIndex = 0;
+  int currentQstnIndex = 0;
   int? selectedIndex;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          actions: [
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.blue, borderRadius: BorderRadius.circular(10)),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Text(
+                "${currentQstnIndex + 1}/${DummyDb.question.length}",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ),
+            SizedBox(width: 20)
+          ],
+        ),
         backgroundColor: Colors.black,
         body: Center(
           child: Padding(
@@ -27,97 +40,106 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-      
-                //Questions Section
+                //question section
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(color: colorConstants.greyShade1,
-                      borderRadius: BorderRadius.circular(10)
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade800,
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Text(DummyDb.question[currentQuestionIndex]["question"].toString(),
-                    style: TextStyle(color: colorConstants.mainWhite,
-                    fontSize: 20,
-                      fontWeight: FontWeight.w200
-                    ),
+                  child: Text(
+                    DummyDb.question[currentQstnIndex]["question"].toString(),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
-      
-                SizedBox(height: 30,),
-                // Options Section
+                SizedBox(
+                  height: 30,
+                ),
+                // options seciton
                 Column(
-                  children:
-                    List.generate(
-                        4,
+                  children: List.generate(
+                    4,
                         (index) {
-                          List ansOptions = DummyDb.question[currentQuestionIndex]["options"] as List;
-                          return optionsCard(
-                            borderColor: getColor(index),
-                            onOpitonsTapped: (){
-
-                              setState(() {
-                                selectedIndex = index;
-                              });
-                              if(index == DummyDb.question[currentQuestionIndex]["answerIndex"])
-                                {
-                                  print("rignt answer");
-                                }
-                              else
-                              {
-                                print("wrong answer");
-                              }
-                            },
-                            option: ansOptions[index],
-                          );
+                      List ansOptions =
+                      DummyDb.question[currentQstnIndex]["options"] as List;
+                      return optionsCard(
+                        borderColor: getColor(index),
+                        onOpitonsTapped: () {
+                          if (selectedIndex == null) {
+                            selectedIndex = index;
+                            setState(() {});
+                            if (index ==
+                                DummyDb.question[currentQstnIndex]
+                                ["answerIndex"]) {
+                              print("rignt answer");
+                            } else {
+                              print("wrong answer");
+                            }
+                          }
                         },
-
-                    )
-                  
+                        option: ansOptions[index],
+                      );
+                    },
+                  ),
                 ),
-                Spacer(),
-                InkWell(
-                  onTap: (){
-                    if (currentQuestionIndex < DummyDb.question.length - 1)
-                      {
-                        currentQuestionIndex++;
-                        print("currentQuestionIndex" + currentQuestionIndex.toString());
-                        setState(() {
 
-                        });
+                InkWell(
+                  onTap: () {
+                    if (selectedIndex != null) {
+                      if (currentQstnIndex < DummyDb.question.length - 1) {
+                        currentQstnIndex++;
+                        print(currentQstnIndex);
+                        setState(() {});
+                        selectedIndex = null;
                       }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Select a valid choice")));
+                    }
                   },
                   child: Container(
                     alignment: Alignment.center,
                     width: double.infinity,
                     padding: EdgeInsets.all(15),
-                    decoration: BoxDecoration(color: Colors.blue,
-                        borderRadius: BorderRadius.circular(10)
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade800,
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                    child: Text("Next",
-                      style: TextStyle(color: colorConstants.mainWhite,
+                    child: Text(
+                      "Next",
+                      style: TextStyle(
+                          color: Colors.white,
                           fontSize: 20,
-                          fontWeight: FontWeight.w200
-                      ),
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-        )
+        ),
       ),
     );
   }
 
-
   Color getColor(int index) {
-    if (DummyDb.question[currentQuestionIndex]["answerIndex"] == selectedIndex &&
-        index == selectedIndex) {
-      return Colors.green;
+    if (selectedIndex != null) {
+      if (DummyDb.question[currentQstnIndex]["answerIndex"] == selectedIndex &&
+          index == selectedIndex) {
+        return Colors.green;
+      } else if (DummyDb.question[currentQstnIndex]["answerIndex"] !=
+          selectedIndex &&
+          index == selectedIndex) {
+        return Colors.red;
+      } else if (DummyDb.question[currentQstnIndex]["answerIndex"] == index) {
+        return Colors.green;
+      }
     }
-    return Colors.red.shade800;
+
+    return Colors.grey.shade800;
   }
-
 }
-
-
