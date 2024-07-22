@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quizapp/dummy_db.dart';
 import 'package:quizapp/utils/constants/colorConstants.dart';
 import 'package:quizapp/view/home_screen/widgets/optionsCard.dart';
+import 'package:quizapp/view/result_screen/ResultScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int rightAnswerCount = 0;
   int currentQstnIndex = 0;
   int? selectedIndex;
   @override
@@ -37,88 +39,105 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //question section
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade800,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Text(
-                    DummyDb.question[currentQstnIndex]["question"].toString(),
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                // options seciton
-                Column(
-                  children: List.generate(
-                    4,
-                        (index) {
-                      List ansOptions =
-                      DummyDb.question[currentQstnIndex]["options"] as List;
-                      return optionsCard(
-                        borderColor: getColor(index),
-                        onOpitonsTapped: () {
-                          if (selectedIndex == null) {
-                            selectedIndex = index;
-                            setState(() {});
-                            if (index ==
-                                DummyDb.question[currentQstnIndex]
-                                ["answerIndex"]) {
-                              print("rignt answer");
-                            } else {
-                              print("wrong answer");
-                            }
-                          }
-                        },
-                        option: ansOptions[index],
-                      );
-                    },
-                  ),
-                ),
-
-                InkWell(
-                  onTap: () {
-                    if (selectedIndex != null) {
-                      if (currentQstnIndex < DummyDb.question.length - 1) {
-                        currentQstnIndex++;
-                        print(currentQstnIndex);
-                        setState(() {});
-                        selectedIndex = null;
-                      }
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Select a valid choice")));
-                    }
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //question section
+                  Container(
                     width: double.infinity,
                     padding: EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      color: Colors.blue.shade800,
+                      color: Colors.grey.shade800,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Text(
-                      "Next",
+                      DummyDb.question[currentQstnIndex]["question"].toString(),
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.w500),
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 30,
+                  ),
+                  // options seciton
+                  Column(
+                    children: List.generate(
+                      4,
+                          (index) {
+                        List ansOptions =
+                        DummyDb.question[currentQstnIndex]["options"] as List;
+                        return optionsCard(
+                          borderColor: getColor(index),
+                          onOpitonsTapped: () {
+                            if (selectedIndex == null) {
+                              selectedIndex = index; // click cheytha indexum answer indexum equal aanenkil
+                              setState(() {});
+                              if (selectedIndex ==
+                                  DummyDb.question[currentQstnIndex]
+                                  ["answerIndex"]) {
+                                rightAnswerCount ++;
+                                print("rightAnswerCount" + rightAnswerCount.toString());
+                              }
+                              else
+                              {
+                                print("wrong answer");
+                              }
+                            }
+                          },
+                          option: ansOptions[index],
+                        );
+                      },
+                    ),
+                  ),
+
+                  InkWell(
+                    onTap: () {
+                      if (selectedIndex != null)
+                      {
+                        if (currentQstnIndex < DummyDb.question.length - 1)
+                        {
+                          currentQstnIndex++;
+                          print(currentQstnIndex);
+                          setState(() {});
+                          selectedIndex = null;
+                        }
+                        else
+                        {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>
+                              ResultScreen(rightAnswerCount: rightAnswerCount))
+
+                          );
+                        }
+                      }
+                      else
+                      {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Select a valid choice")));
+                      }
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.shade800,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Text(
+                        "Next",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -143,3 +162,4 @@ class _HomeScreenState extends State<HomeScreen> {
     return Colors.grey.shade800;
   }
 }
+
