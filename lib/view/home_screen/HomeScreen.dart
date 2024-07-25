@@ -14,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int rightAnswerCount = 0;
+  int wrongAnswerCount = 0;
+  int skippedQuestions = 0;
   int currentQstnIndex = 0;
   int? selectedIndex;
   @override
@@ -73,17 +75,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         return optionsCard(
                           borderColor: getColor(index),
                           onOpitonsTapped: () {
-                            if (selectedIndex == null) {
+                            if (selectedIndex == null)
+                            {
                               selectedIndex = index; // click cheytha indexum answer indexum equal aanenkil
                               setState(() {});
                               if (selectedIndex ==
                                   DummyDb.question[currentQstnIndex]
-                                  ["answerIndex"]) {
+                                  ["answerIndex"])
+                              {
                                 rightAnswerCount ++;
                                 print("rightAnswerCount" + rightAnswerCount.toString());
                               }
                               else
                               {
+                                wrongAnswerCount++;
                                 print("wrong answer");
                               }
                             }
@@ -108,7 +113,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         else
                         {
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>
-                              ResultScreen(rightAnswerCount: rightAnswerCount))
+                              ResultScreen(rightAnswerCount: rightAnswerCount,
+                                  wrongAnswerCount: wrongAnswerCount
+                              ))
 
                           );
                         }
