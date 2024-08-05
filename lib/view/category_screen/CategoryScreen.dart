@@ -12,29 +12,28 @@ class CategoryScreen extends StatefulWidget
 class _CategoryScreenState extends State<CategoryScreen>
 {
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          child: Stack(
-            children: [
-              Container(
-                color: Colors.black
-              ),
-              ClipPath(
-                clipper: TheCustomClipper(),
-                child: Container(
-                  color: Color(0xff008080),
-                ),
-              )
-            ],
+      backgroundColor: Color(0xff008080),
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 250,),
+          Container(
+            height: 430,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.vertical(
+                  top: Radius.elliptical(
+                      MediaQuery.of(context).size.width, 100.0)),
+            ),
           ),
-        )
+        ],
       ),
     );
   }
 }
+
+
 
 class TheCustomClipper extends CustomClipper<Path>
 {
