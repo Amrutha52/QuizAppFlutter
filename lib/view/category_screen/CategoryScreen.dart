@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quizapp/utils/constants/ImageConstants.dart';
 
 class CategoryScreen extends StatefulWidget
 {
@@ -43,6 +44,98 @@ class _CategoryScreenState extends State<CategoryScreen>
               borderRadius: BorderRadius.vertical(
                   top: Radius.elliptical(
                       MediaQuery.of(context).size.width, 100.0)),
+            ),
+            child: Column(
+              children: [
+                Row(children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 90, 0, 0),
+                    child: Container(
+                      height: 150,
+                      width: 140,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30))
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 10,),
+                          Image.asset(imageConstants.SCIENCE_PNG, width: 100,height: 100,),
+                          Text("Science", style: TextStyle(color: Colors.black, fontSize: 14),)
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 90, 0, 0),
+                    child: Container(
+                      height: 150,
+                      width: 140,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30))
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 10,),
+                          Image.asset(imageConstants.DART_PNG, width: 100,height: 100,),
+                          Text("Dart", style: TextStyle(color: Colors.black, fontSize: 14),)
+                        ],
+                      ),
+                    ),
+                  ),
+                ],),
+                Row(children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
+                    child: Container(
+                      height: 150,
+                      width: 140,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30))
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 10,),
+                          Image.asset(imageConstants.FLUTTER_PNG, width: 100,height: 100,),
+                          Text("Flutter", style: TextStyle(color: Colors.black, fontSize: 14),)
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
+                    child: Container(
+                      height: 150,
+                      width: 140,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30))
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 10,),
+                          Image.asset(imageConstants.GAMES_PNG, width: 100,height: 100,),
+                          Text("Games", style: TextStyle(color: Colors.black, fontSize: 14),)
+                        ],
+                      ),
+                    ),
+                  ),
+                ],)
+              ],
             ),
           ),
         ],
