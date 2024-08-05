@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:quizapp/MyHttpOverrides.dart';
+import 'package:quizapp/view/home_screen/HomeScreen.dart';
 import 'package:quizapp/view/result_screen/ResultScreen.dart';
 import 'package:quizapp/view/splash_screen/SplashScreen.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Quiz App',
-      home: Splashscreen(),
+      home: HomeScreen(),
     );
   }
 }

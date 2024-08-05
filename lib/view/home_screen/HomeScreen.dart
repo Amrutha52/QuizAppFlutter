@@ -4,6 +4,7 @@ import 'package:quizapp/dummy_db.dart';
 import 'package:quizapp/utils/constants/colorConstants.dart';
 import 'package:quizapp/view/home_screen/widgets/optionsCard.dart';
 import 'package:quizapp/view/result_screen/ResultScreen.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,6 +19,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int skippedQuestions = 0;
   int currentQstnIndex = 0;
   int? selectedIndex;
+  double progress = 0.0;
+  //final double _consumedData = {currentQstnIndex + 1}/ totalData;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,16 +29,24 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           actions: [
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(10)),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Text(
-                "${currentQstnIndex + 1}/${DummyDb.question.length}",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-            ),
-            SizedBox(width: 20)
+           SingleChildScrollView(
+             scrollDirection: Axis.horizontal,
+             child: Row(
+                 children: [
+                   SizedBox(height: 10,),
+                   Container(
+                     decoration: BoxDecoration(
+                         color: Colors.blue, borderRadius: BorderRadius.circular(10)),
+                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                     child: Text(
+                       "${currentQstnIndex + 1}/${DummyDb.question.length}",
+                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                     ),
+                   ),
+                   SizedBox(width: 20)
+                 ],
+             ),
+           )
           ],
         ),
         backgroundColor: Colors.black,
@@ -46,6 +58,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  new LinearProgressIndicator(
+                    value: progress,
+                    valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
+                  ),
+                  SizedBox(height: 10,),
                   //question section
                   Container(
                     width: double.infinity,
@@ -78,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             if (selectedIndex == null)
                             {
                               selectedIndex = index; // click cheytha indexum answer indexum equal aanenkil
+                              updateProgress(progress + 0.1);
                               setState(() {});
                               if (selectedIndex ==
                                   DummyDb.question[currentQstnIndex]
@@ -107,7 +125,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         {
                           currentQstnIndex++;
                           print(currentQstnIndex);
-                          setState(() {});
+
+                          setState(() {
+
+                          });
                           selectedIndex = null;
                         }
                         else
@@ -168,5 +189,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Colors.grey.shade800;
   }
+
+  void updateProgress(double value)
+  {
+    print("progressvalue" + value.toString());
+    setState(() {
+      progress = value;
+    });
+  }
+
 }
 
