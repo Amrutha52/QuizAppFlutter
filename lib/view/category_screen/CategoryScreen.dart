@@ -16,10 +16,28 @@ class _CategoryScreenState extends State<CategoryScreen>
     return Scaffold(
       backgroundColor: Color(0xff008080),
       body: Column(
-        children: <Widget>[
-          SizedBox(height: 250,),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 100, 0, 0),
+            child: Text("Hi Buddy!", style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 40,
+            ),),
+          ),
+          SizedBox(height: 10,),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+            child: Text("Let's make this day productive", style: TextStyle(
+              fontWeight: FontWeight.normal,
+              color: Colors.white,
+              fontSize: 18,
+            ),),
+          ),
+          SizedBox(height: 50,),
           Container(
-            height: 430,
+            height: 437,
             decoration: BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.vertical(
